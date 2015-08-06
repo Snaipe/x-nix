@@ -29,6 +29,7 @@
 # endif
 
 # include <stdint.h>
+# include <stdlib.h>
 
 # ifdef XNIX_VANILLA_WIN32
 #  define VC_EXTRALEAN
@@ -41,5 +42,13 @@
 # else
 #  include <unistd.h>
 # endif
+
+# define XNIX_ASSERT(Condition, ...)                \
+    do {                                            \
+        if (!(Condition)) {                         \
+            fprintf(stderr, "x-nix: " __VA_ARGS__); \
+            abort();                                \
+        }                                           \
+    } while (0)
 
 #endif /* !X_NIX_COMMON_H_ */
