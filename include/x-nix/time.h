@@ -33,6 +33,18 @@
 
 # if defined(__APPLE__) || defined (XNIX_VANILLA_WIN32)
 
+#  define CLOCK_REALTIME            0
+#  define CLOCK_MONOTONIC           1
+#  define CLOCK_PROCESS_CPUTIME_ID  2
+#  define CLOCK_THREAD_CPUTIME_ID   3
+#  define CLOCK_MONOTONIC_RAW       4
+#  define CLOCK_REALTIME_COARSE     5
+#  define CLOCK_MONOTONIC_COARSE    6
+#  define CLOCK_BOOTTIME            7
+#  define CLOCK_REALTIME_ALARM      8
+#  define CLOCK_BOOTTIME_ALARM      9
+#  define CLOCK_TAI                 11
+
 #  define XNIX_GIGA 1000000000
 
 struct timespec_compat {
@@ -41,6 +53,9 @@ struct timespec_compat {
 };
 
 static inline int clock_gettime(clockid_t clock, struct timespec *ts) {
+    XNIX_ASSERT(clock == CLOCK_MONOTONIC
+             || clock == CLOCK_MONOTONIC_RAW
+             || clock == CLOCK_MONOTONIC_COARSE, "Clock not supported.");
 #  if defined(__APPLE__)
     clock_serv_t cclock;
     mach_timespec_t mts;
@@ -52,9 +67,6 @@ static inline int clock_gettime(clockid_t clock, struct timespec *ts) {
     *ts = (struct timespec) { mts.tv_sec, mts.tv_nsec };
     return res > 0 ? -1 : 0;
 #  elif defined(XNIX_VANILLA_WIN32)
-    XNIX_ASSERT(clock == CLOCK_MONOTONIC
-             || clock == CLOCK_MONOTONIC_RAW
-             || clock == CLOCK_MONOTONIC_COARSE, "Clock not supported.");
 
     LARGE_INTEGER freq, count;
     if (!QueryPerformanceFrequency(&freq) || !QueryPerformanceCounter(&count))
