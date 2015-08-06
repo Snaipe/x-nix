@@ -2,6 +2,8 @@
 
 ## What is ❌-nix ?
 
+**WARNING:** This library is still experimental. Use with care!
+
 ❌-nix (or "cross-nix") is a header-only C library meant to provide a
 linux compatibility layer on top of other platforms by including
 the right headers or implementing the right functions.
