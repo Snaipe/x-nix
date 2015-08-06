@@ -27,5 +27,6 @@
 # include "pid.h"
 # include "wait.h"
 # include "pipe.h"
+# include "time.h"
 
 #endif /* !X_NIX_H_ */

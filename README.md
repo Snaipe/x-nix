@@ -31,6 +31,7 @@ Or, if you want to only add some of the features, include any of the following:
 #include <x-nix/pid.h> // pid_t, getpid
 #include <x-nix/wait.h> // wait, waitpid
 #include <x-nix/pipe.h> // pipe
+#include <x-nix/time.h> // clock_gettime
 ```
 
 ## Acknowledgements
